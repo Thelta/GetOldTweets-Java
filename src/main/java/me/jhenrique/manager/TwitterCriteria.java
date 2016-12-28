@@ -17,6 +17,8 @@ public class TwitterCriteria {
 	private String querySearch;
 	
 	private int maxTweets;
+
+	private String lang;
 	
 	private TwitterCriteria() {
 	}
@@ -75,6 +77,16 @@ public class TwitterCriteria {
 		return this;
 	}
 
+	/**
+	 * @param lang Language of the tweet
+	 * 
+	 * @return Current {@link TwitterCriteria}
+	 */
+	public TwitterCriteria setLanguage(String lang) {
+		this.lang = lang;
+		return this;
+	}
+
 	String getUsername() {
 		return username;
 	}
@@ -93,6 +105,10 @@ public class TwitterCriteria {
 
 	int getMaxTweets() {
 		return maxTweets;
+	}
+
+	String getLang() {
+		return lang;
 	}
 	
 }

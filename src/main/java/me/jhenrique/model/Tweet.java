@@ -28,6 +28,8 @@ public class Tweet {
 	private String hashtags;
 	
 	private String geo;
+
+	private String lang;
 	
 	public Tweet() {
 	}
@@ -110,6 +112,14 @@ public class Tweet {
 
 	public void setGeo(String geo) {
 		this.geo = geo;
+	}
+
+	public String getLang(){
+		return this.lang;
+	}
+
+	public void setLang(String lang){
+		this.lang = lang;
 	}
 	
 }

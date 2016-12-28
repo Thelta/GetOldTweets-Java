@@ -1,7 +1,10 @@
 package me.jhenrique.main;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
@@ -11,7 +14,7 @@ import me.jhenrique.model.Tweet;
 
 public class Exporter {
 	
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 	public static void main(String[] args) {
 		if (args == null || args.length == 0) {
@@ -24,6 +27,7 @@ public class Exporter {
 			System.out.println("   username: Username of a specific twitter account (without @)");
 			System.out.println("      since: The lower bound date (yyyy-mm-aa)");
 			System.out.println("      until: The upper bound date (yyyy-mm-aa)");
+			System.out.println("      lang:  ISO 639-1 country code.");
 			System.out.println("querysearch: A query text to be matched");
 			System.out.println("  maxtweets: The maximum number of tweets to retrieve");
 			
@@ -52,11 +56,15 @@ public class Exporter {
 					criteria.setQuerySearch(parameterSplit[1]);
 				} else if (parameterSplit[0].equals("maxtweets")) {
 					criteria.setMaxTweets(Integer.valueOf(parameterSplit[1]));
+				} else if(parameterSplit[0].equals("lang")) {
+					criteria.setLanguage(parameterSplit[1]);
 				}
 			}
 			
 			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter("output_got.csv"));
+				FileOutputStream fis = new FileOutputStream(new File("output_got.csv"));
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+									fis, "UTF8"));
 				bw.write("username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink");
 				bw.newLine();
 				

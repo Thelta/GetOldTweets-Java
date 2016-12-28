@@ -43,7 +43,7 @@ public class TweetManager {
 	 * @return JSON response used by Twitter to build its results
 	 * @throws Exception
 	 */
-	private static String getURLResponse(String username, String since, String until, String querySearch, String scrollCursor) throws Exception {
+	private static String getURLResponse(String username, String since, String until, String lang, String querySearch, String scrollCursor) throws Exception {
 		String appendQuery = "";
 		if (username != null) {
 			appendQuery += "from:"+username;
@@ -53,6 +53,9 @@ public class TweetManager {
 		}
 		if (until != null) {
 			appendQuery += " until:"+until;
+		}
+		if (lang != null) {
+			appendQuery += " lang:"+lang;
 		}
 		if (querySearch != null) {
 			appendQuery += " "+querySearch;
@@ -77,7 +80,7 @@ public class TweetManager {
 		try {
 			String refreshCursor = null;
 			outerLace: while (true) {
-				JSONObject json = new JSONObject(getURLResponse(criteria.getUsername(), criteria.getSince(), criteria.getUntil(), criteria.getQuerySearch(), refreshCursor));
+				JSONObject json = new JSONObject(getURLResponse(criteria.getUsername(), criteria.getSince(), criteria.getUntil(), criteria.getLang(), criteria.getQuerySearch(), refreshCursor));
 				refreshCursor = json.getString("min_position");
 				Document doc = Jsoup.parse((String) json.get("items_html"));
 				Elements tweets = doc.select("div.js-stream-tweet");
